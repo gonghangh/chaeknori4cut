@@ -2,7 +2,9 @@
 
 > **"책놀이! 얼마나 재밌는지 감도 안옴" 🍎**  
 > **책과 함께 나눈 웃음과 소중한 추억을 싱그러운 숲속 감성 4컷 프레임에 담는 감성 포토부스 웹 키오스크**  
-> 9:16 터치 키오스크 & 모바일/PC 반응형 완벽 지원, 300 DPI 초고화질 출력 및 A4 4장 모아찍기 최적화
+> 9:16 터치 키오스크 & 모바일/PC 반응형 완벽 지원, 300 DPI 초고화질 출력 및 A4 4장 모아찍기 최적화  
+>
+> 🌐 **온라인 라이브 체험하기**: [https://gonghangh.github.io/chaeknori4cut/](https://gonghangh.github.io/chaeknori4cut/)
 
 ![책놀이네컷 로고](assets/chaeknori_logo.svg)
 
