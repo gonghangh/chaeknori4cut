@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" width="420" height="120">
+  <defs>
+    <linearGradient id="forestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D6A4F" />
+      <stop offset="100%" stop-color="#1B4332" />
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#74C69D" />
+      <stop offset="100%" stop-color="#40916C" />
+    </linearGradient>
+    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE066" />
+      <stop offset="100%" stop-color="#F48C06" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#1B4332" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- Left Icon: Open Book with Sprouting Leaves & Tiny Apple -->
+  <g transform="translate(15, 12)" filter="url(#shadow)">
+    <!-- Book Spine & Pages -->
+    <path d="M45,78 C32,70 18,72 10,76 L10,32 C20,28 34,26 45,34 C56,26 70,28 80,32 L80,76 C72,72 58,70 45,78 Z" fill="#FAF5E8" stroke="#3F5E4D" stroke-width="3" stroke-linejoin="round"/>
+    <!-- Left Page Lines -->
+    <path d="M18,42 C26,38 36,38 40,43" fill="none" stroke="#B7C9B9" stroke-width="2" stroke-linecap="round"/>
+    <path d="M18,52 C26,48 36,48 40,53" fill="none" stroke="#B7C9B9" stroke-width="2" stroke-linecap="round"/>
+    <path d="M18,62 C26,58 36,58 40,63" fill="none" stroke="#B7C9B9" stroke-width="2" stroke-linecap="round"/>
+    <!-- Right Page Lines -->
+    <path d="M50,43 C54,38 64,38 72,42" fill="none" stroke="#B7C9B9" stroke-width="2" stroke-linecap="round"/>
+    <path d="M50,53 C54,48 64,48 72,52" fill="none" stroke="#B7C9B9" stroke-width="2" stroke-linecap="round"/>
+    <path d="M50,63 C54,58 64,58 72,62" fill="none" stroke="#B7C9B9" stroke-width="2" stroke-linecap="round"/>
+    <!-- Central Sprout / Leaves -->
+    <path d="M45,34 C42,20 30,12 25,16 C22,24 32,32 45,34 Z" fill="url(#leafGrad)"/>
+    <path d="M45,34 C48,18 60,10 65,14 C68,22 58,32 45,34 Z" fill="#52B788"/>
+    <!-- Stem -->
+    <path d="M45,34 L45,45" fill="none" stroke="#2D6A4F" stroke-width="3" stroke-linecap="round"/>
+    <!-- Little Cat Ears peaking from behind book -->
+    <polygon points="18,28 25,15 32,26" fill="#1C1C1C"/>
+    <polygon points="21,26 25,18 29,25" fill="#FFB7B2"/>
+    <!-- Little Red Apple Badge -->
+    <circle cx="70" cy="24" r="9" fill="#E63946"/>
+    <path d="M70,15 C72,13 75,13 76,14" fill="none" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="67" cy="14" rx="3" ry="1.5" fill="#52B788" transform="rotate(-20 67 14)"/>
+  </g>
+
+  <!-- Title Text -->
+  <text x="115" y="60" font-family="'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="34" font-weight="900" fill="url(#forestGrad)" letter-spacing="-0.5">
+    책놀이<tspan fill="#D85A38">네컷</tspan>
+  </text>
+  
+  <!-- Subtitle Badge & Sparkle -->
+  <rect x="116" y="74" width="220" height="22" rx="11" fill="#E8F5E9" />
+  <text x="126" y="89" font-family="'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="11" font-weight="700" fill="#2D6A4F" letter-spacing="0.5">
+    🌿 숲속 도서관 감성 포토부스
+  </text>
+
+  <!-- Four-Cut Sparkle Icons -->
+  <g transform="translate(355, 35)">
+    <circle cx="8" cy="8" r="5" fill="#52B788" />
+    <circle cx="24" cy="8" r="5" fill="#FFE066" />
+    <circle cx="8" cy="24" r="5" fill="#E63946" />
+    <circle cx="24" cy="24" r="5" fill="#2D6A4F" />
+  </g>
+</svg>

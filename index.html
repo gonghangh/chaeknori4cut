@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>책놀이네컷 (Chaeknori 4-Cuts) - 숲속 도서관 감성 포토부스</title>
+    <link rel="icon" type="image/svg+xml" href="assets/chaeknori_logo.svg">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+    <!-- 숲속 배경 나뭇잎 파티클 캔버스 -->
+    <canvas id="leafCanvas"></canvas>
+
+    <!-- 상단 롤링 마키 티커 배너 (테이프 감성) -->
+    <div class="ticker-tape">
+        <div class="ticker-track">
+            <div class="ticker-item">
+                <span>▶책</span>
+                <span>▶친구</span>
+                <span class="point">▶즐거움</span>
+                <span class="point">▶즐거움</span>
+                <span class="point">▶책놀이</span>
+                <span>🌿 책과 함께 떠나는 맑은 숲속 네컷 여행</span>
+                <span class="apple">🍎 책놀이! 얼마나 재밌는지 감도 안옴</span>
+                <span>🐱 책냥이와 함께하는 감성 포토부스</span>
+                <span>▶책</span>
+                <span>▶친구</span>
+                <span class="point">▶즐거움</span>
+                <span class="point">▶즐거움</span>
+                <span class="point">▶책놀이</span>
+                <span>🌿 300 DPI 초고화질 인쇄 & A4 4장 모아찍기</span>
+                <span>LIVE WITH PURPOSE</span>
+            </div>
+            <div class="ticker-item">
+                <span>▶책</span>
+                <span>▶친구</span>
+                <span class="point">▶즐거움</span>
+                <span class="point">▶즐거움</span>
+                <span class="point">▶책놀이</span>
+                <span>🌿 책과 함께 떠나는 맑은 숲속 네컷 여행</span>
+                <span class="apple">🍎 책놀이! 얼마나 재밌는지 감도 안옴</span>
+                <span>🐱 책냥이와 함께하는 감성 포토부스</span>
+                <span>▶책</span>
+                <span>▶친구</span>
+                <span class="point">▶즐거움</span>
+                <span class="point">▶즐거움</span>
+                <span class="point">▶책놀이</span>
+                <span>🌿 300 DPI 초고화질 인쇄 & A4 4장 모아찍기</span>
+                <span>LIVE WITH PURPOSE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 네비게이션 헤더 -->
+    <header class="navbar no-print">
+        <div class="nav-brand" id="navBrandBtn">
+            <img src="assets/chaeknori_logo.svg" alt="책놀이네컷" class="logo">
+        </div>
+        <div class="nav-actions">
+            <!-- 숲속 사운드 토글 -->
+            <button class="btn btn-soft" id="btnAudioToggle" title="숲속 산새소리 효과음 ON/OFF">
+                <span id="audioIcon">🎵</span>
+                <span id="audioLabel">숲속 소리</span>
+            </button>
+            <!-- 9:16 키오스크 모드 토글 -->
+            <button class="btn btn-soft" id="btnKioskToggle" title="9:16 키오스크 비율 토글">
+                <span>📱</span>
+                <span class="hide-mobile">키오스크</span>
+            </button>
+            <!-- 전체화면 토글 -->
+            <button class="btn btn-soft btn-icon-only" id="btnFullscreen" title="전체화면">
+                ⛶
+            </button>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <main class="app-container">
+        <!-- ==========================================
+             STEP 1: 홈 / 시작 화면
+        =========================================== -->
+        <section class="step-view active" id="homeStep">
+            <div class="home-hero">
+                <div class="hero-content">
+                    <div class="badge-forest">
+                        <span>🌿</span> 밝고 싱그러운 숲속 도서관 포토부스
+                    </div>
+                    <h1 class="hero-title">
+                        책과 함께 웃는 순간,<br>
+                        <span class="highlight">책놀이네컷</span>에 담아요
+                    </h1>
+                    <p class="hero-desc">
+                        사과 속에서 책 읽는 여유, 노란 책 뒤에서 빼꼼 마주치는 책냥이!<br>
+                        친구들과 나눈 특별한 독서의 추억을 4컷 프레임에 담아보세요.
+                    </p>
+
+                    <!-- 사과 캐릭터 & 문구 마스코트 배너 -->
+                    <div class="mascot-banner">
+                        <img src="assets/apple_reader.png" alt="책놀이 사과 마스코트" id="appleMascotImg">
+                        <div class="mascot-banner-text">
+                            <h4>"책놀이! 얼마나 재밌는지 감도 안옴" 🍎</h4>
+                            <p>베어문 사과에 쏙 들어가 책 읽는 상상, 오늘 사진에 퐁당 넣어보세요!</p>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions">
+                        <button class="btn btn-forest" id="btnStartShoot">
+                            📸 지금 촬영 시작하기
+                        </button>
+                        <label class="btn btn-soft" style="cursor: pointer;">
+                            📁 사진 직접 올리기
+                            <input type="file" id="bulkUploadInput" accept="image/*" multiple style="display: none;">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 우측 시그니처 프레임 미리보기 -->
+                <div class="hero-preview">
+                    <div class="frame-card-preview">
+                        <img src="frames/frame_chaeknori.png" alt="책놀이네컷 시그니처 프레임" class="preview-img" id="heroFrameImg">
+                        <!-- 인터랙티브 책냥이 배지 -->
+                        <div class="floating-cat-badge" id="catMascotBadge" title="책냥이를 클릭해보세요!">
+                            <img src="assets/cat_character.png" alt="책냥이">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 프레임 테마 선택 섹션 -->
+            <div class="theme-selector-section">
+                <div class="section-header">
+                    <div>
+                        <h3>🌲 숲속 프레임 테마</h3>
+                        <p>원하는 분위기의 프레임을 골라보세요. 마스크가 자연스럽게 적용됩니다.</p>
+                    </div>
+                    <label class="btn btn-soft" style="font-size: 0.84rem; cursor: pointer;">
+                        ➕ 커스텀 프레임 불러오기
+                        <input type="file" id="customFrameInput" accept="image/png" style="display: none;">
+                    </label>
+                </div>
+
+                <div class="theme-cards-grid" id="themeCardsContainer">
+                    <!-- 자바스크립트로 테마 카드 렌더링 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             STEP 2: 웹캠 촬영 & 업로드 화면
+        =========================================== -->
+        <section class="step-view" id="shootingStep">
+            <div class="shooting-layout">
+                <!-- 좌측: 비디오 뷰파인더 -->
+                <div class="viewfinder-card">
+                    <video id="cameraVideo" autoplay playsinline muted></video>
+                    
+                    <!-- 셔터 플래시 이펙트 -->
+                    <div class="shutter-flash" id="shutterFlash"></div>
+
+                    <!-- 카운트다운 숫자 오버레이 -->
+                    <div class="countdown-overlay" id="countdownOverlay">
+                        <div class="countdown-number" id="countdownText">3</div>
+                    </div>
+
+                    <!-- 뷰파인더 테두리 가이드 -->
+                    <div class="viewfinder-guides">
+                        <div class="guide-badge" id="currentCutBadge">
+                            📸 1번째 컷 준비 (총 4컷)
+                        </div>
+                    </div>
+
+                    <!-- 하단 촬영 제어 바 -->
+                    <div class="shooting-controls-bar">
+                        <!-- 반전 토글 -->
+                        <button class="btn btn-soft btn-icon-only" id="btnToggleMirror" title="좌우 반전">
+                            ⇄
+                        </button>
+                        <!-- 카메라 전환 (모바일) -->
+                        <button class="btn btn-soft btn-icon-only" id="btnSwitchCam" title="카메라 전환">
+                            🔄
+                        </button>
+                        <!-- 메인 셔터 버튼 -->
+                        <div class="btn-shutter-main" id="btnShutterTrigger" title="사진 촬영 (스페이스바)"></div>
+                        <!-- 타이머 선택 (3s / 5s / 10s) -->
+                        <button class="btn btn-soft" id="btnTimerToggle" style="padding: 8px 12px; font-weight: 700;">
+                            ⏱️ <span id="timerSecLabel">5초</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 우측 사이드바: 4컷 현황판 -->
+                <div class="shooting-sidebar">
+                    <div class="shooting-progress-header">
+                        <h4>🌿 촬영된 4컷 사진</h4>
+                        <span id="slotsCountText" style="font-size: 0.85rem; font-weight: 700; color: var(--forest-600);">0 / 4</span>
+                    </div>
+
+                    <div class="slots-preview-grid">
+                        <div class="slot-item active" data-slot="0">
+                            <span class="slot-label">1컷 (상좌)</span>
+                            <div class="slot-placeholder">대기중</div>
+                            <img src="" style="display: none;" alt="1컷">
+                            <button class="btn-retake-slot" title="다시 찍기">다시 찍기</button>
+                        </div>
+                        <div class="slot-item" data-slot="1">
+                            <span class="slot-label">2컷 (상우)</span>
+                            <div class="slot-placeholder">대기중</div>
+                            <img src="" style="display: none;" alt="2컷">
+                            <button class="btn-retake-slot" title="다시 찍기">다시 찍기</button>
+                        </div>
+                        <div class="slot-item" data-slot="2">
+                            <span class="slot-label">3컷 (하좌)</span>
+                            <div class="slot-placeholder">대기중</div>
+                            <img src="" style="display: none;" alt="3컷">
+                            <button class="btn-retake-slot" title="다시 찍기">다시 찍기</button>
+                        </div>
+                        <div class="slot-item" data-slot="3">
+                            <span class="slot-label">4컷 (하우)</span>
+                            <div class="slot-placeholder">대기중</div>
+                            <img src="" style="display: none;" alt="4컷">
+                            <button class="btn-retake-slot" title="다시 찍기">다시 찍기</button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto;">
+                        <button class="btn btn-forest" id="btnGoEdit" disabled>
+                            🎨 4컷 꾸미러 가기
+                        </button>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-soft" id="btnRetakeAll" style="flex: 1; font-size: 0.82rem;">
+                                ↺ 처음부터 다시
+                            </button>
+                            <label class="btn btn-soft" style="flex: 1; font-size: 0.82rem; cursor: pointer; text-align: center;">
+                                📁 파일 올리기
+                                <input type="file" id="shootingUploadInput" accept="image/*" multiple style="display: none;">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             STEP 3: 꾸미기 & 에디터 화면
+        =========================================== -->
+        <section class="step-view" id="editStep">
+            <div class="editor-layout">
+                <!-- 좌측: 실시간 캔버스 프리뷰 및 스티커 레이어 -->
+                <div class="canvas-preview-container">
+                    <div class="interactive-frame-wrap" id="interactiveWrap">
+                        <canvas id="editorCanvas"></canvas>
+                        <!-- 스티커 조작 오버레이 레이어 -->
+                        <div id="stickerOverlayLayer"></div>
+                    </div>
+                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 12px;">
+                        💡 스티커를 마우스나 손가락으로 드래그하여 원하는 위치에 놓을 수 있어요!
+                    </p>
+                </div>
+
+                <!-- 우측 사이드바: 필터 & 스티커 & 문구 도구 모음 -->
+                <div class="editor-sidebar">
+                    <div class="editor-tabs">
+                        <button class="tab-btn active" data-tab="filters">✨ 감성 필터</button>
+                        <button class="tab-btn" data-tab="stickers">🍃 스티커</button>
+                        <button class="tab-btn" data-tab="texts">✍️ 문구/날짜</button>
+                    </div>
+
+                    <!-- 1. 필터 탭 -->
+                    <div class="tab-panel active" id="tabPanelFilters">
+                        <h5 style="color: var(--forest-900); font-size: 0.95rem;">숲속 감성 필터 (8종)</h5>
+                        <div class="filters-grid" id="filtersGrid">
+                            <!-- JS 생성 -->
+                        </div>
+                    </div>
+
+                    <!-- 2. 스티커 탭 -->
+                    <div class="tab-panel" id="tabPanelStickers">
+                        <h5 style="color: var(--forest-900); font-size: 0.95rem;">책놀이 & 숲속 스티커</h5>
+                        <div class="stickers-palette-grid" id="stickersPalette">
+                            <!-- JS 생성 -->
+                        </div>
+                        <button class="btn btn-soft" id="btnClearStickers" style="font-size: 0.8rem; margin-top: 6px;">
+                            🗑️ 붙인 스티커 모두 지우기
+                        </button>
+                    </div>
+
+                    <!-- 3. 문구 & 날짜 탭 -->
+                    <div class="tab-panel" id="tabPanelTexts">
+                        <h5 style="color: var(--forest-900); font-size: 0.95rem;">책놀이 감성 문구</h5>
+                        <div class="phrase-chips" id="phraseChips">
+                            <span class="phrase-chip" data-text="책놀이! 얼마나 재밌는지 감도 안옴 🍎">책놀이! 얼마나 재밌는지 감도 안옴</span>
+                            <span class="phrase-chip" data-text="숲속에서 책 한 줄 🌿">숲속에서 책 한 줄</span>
+                            <span class="phrase-chip" data-text="책 읽는 우리, 반짝이는 오늘 ✨">책 읽는 우리, 반짝이는 오늘</span>
+                            <span class="phrase-chip" data-text="책과 친구와 따뜻한 순간 📚">책과 친구와 따뜻한 순간</span>
+                            <span class="phrase-chip" data-text="LIVE WITH PURPOSE">LIVE WITH PURPOSE</span>
+                        </div>
+
+                        <div style="margin-top: 10px;">
+                            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 6px;">
+                                하단 한 줄 문구 직접 쓰기
+                            </label>
+                            <input type="text" id="inputCustomPhrase" placeholder="예: 2026 우리들의 책놀이 기록" style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem;">
+                        </div>
+
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding: 10px; background: #f8fafc; border-radius: 8px;">
+                            <span style="font-size: 0.88rem; font-weight: 600;">상단 날짜 표기</span>
+                            <input type="checkbox" id="chkShowDate" checked style="width: 18px; height: 18px; accent-color: var(--forest-700);">
+                        </div>
+                    </div>
+
+                    <!-- 하단 이동 버튼 -->
+                    <div style="display: flex; gap: 10px; margin-top: auto;">
+                        <button class="btn btn-soft" id="btnBackToShooting" style="flex: 1;">
+                            ‹ 다시 촬영
+                        </button>
+                        <button class="btn btn-forest" id="btnCompleteEdit" style="flex: 1.4;">
+                            완성 및 인쇄 ›
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             STEP 4: 완성 및 인쇄/다운로드
+        =========================================== -->
+        <section class="step-view" id="resultStep">
+            <div class="result-layout">
+                <!-- 좌측: 최종 완성 이미지 뷰어 -->
+                <div class="result-card-wrap">
+                    <img id="resultImg" src="" alt="완성된 책놀이네컷">
+                    <p style="font-size: 0.85rem; color: var(--forest-700); font-weight: 700; margin-top: 14px;">
+                        ✨ 300 DPI 초고화질 (1448 x 2048 px) 렌더링 완료!
+                    </p>
+                </div>
+
+                <!-- 우측 사이드바: 인쇄 & 다운로드 옵션 -->
+                <div class="result-actions-card">
+                    <div>
+                        <h3>🎉 책놀이네컷 완성!</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">
+                            인쇄하거나 고화질 파일로 간직해보세요.
+                        </p>
+                    </div>
+
+                    <!-- 인쇄 옵션 선택기 -->
+                    <div class="print-options-group">
+                        <!-- A4 4장 모아찍기 -->
+                        <div class="print-opt-box active" id="optA4Sheet">
+                            <div class="opt-icon">🖨️</div>
+                            <div class="opt-desc">
+                                <h5>A4 4장 모아찍기 (2x2) <span style="color: var(--forest-700); font-weight: 700;">추천!</span></h5>
+                                <p>A4 1장에 4장을 모아 인쇄하여 가위로 오려 친구 4명과 나눠가져요!</p>
+                            </div>
+                        </div>
+
+                        <!-- 4x6 포토 인화지 -->
+                        <div class="print-opt-box" id="optSingleCard">
+                            <div class="opt-icon">🖼️</div>
+                            <div class="opt-desc">
+                                <h5>4x6 포토 인화지 단독 출력</h5>
+                                <p>포토프린터 전용 규격으로 1장 가득 선명하게 출력합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-forest" id="btnPrintNow" style="padding: 14px; font-size: 1.05rem;">
+                            🖨️ 바로 인쇄하기
+                        </button>
+                        <button class="btn btn-apple" id="btnDownloadPng">
+                            💾 고화질 PNG 이미지 저장
+                        </button>
+                    </div>
+
+                    <!-- 모바일 QR 코드 영역 -->
+                    <div class="qr-box-wrap">
+                        <canvas id="qrCanvas"></canvas>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">
+                            📱 스마트폰 카메라로 QR을 비추면 바로 저장 페이지로 이동해요
+                        </p>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-soft" id="btnRestartAll" style="flex: 1;">
+                            🏠 새 책놀이 시작하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="no-print">
+        <div class="footer-badges">
+            <span>▶책</span>
+            <span>▶친구</span>
+            <span>▶즐거움</span>
+            <span>▶책놀이네컷</span>
+        </div>
+        <p>책놀이네컷 (Chaeknori 4-Cuts) • LIVE WITH PURPOSE • 300 DPI Ultra High Quality Photo Booth</p>
+    </footer>
+
+    <!-- 인쇄 전용 풀스크린 컨테이너 -->
+    <div id="printContainer" class="only-print"></div>
+
+    <!-- Scripts -->
+    <script src="js/audio_effects.js"></script>
+    <script src="js/qrcode_generator.js"></script>
+    <script src="js/camera.js"></script>
+    <script src="js/frame_renderer.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

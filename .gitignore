@@ -1,0 +1,6 @@
+photos/*
+!photos/.gitkeep
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
