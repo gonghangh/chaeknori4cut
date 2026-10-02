@@ -504,15 +504,20 @@ body {
 }
 
 .viewfinder-card {
-    background: #000;
+    background: #111;
     border-radius: var(--radius-xl);
     overflow: hidden;
     position: relative;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.25);
-    aspect-ratio: 4 / 3;
+    box-shadow: 0 16px 44px rgba(27, 67, 50, 0.22);
+    /* 책놀이네컷 프레임 슬롯에 정확히 맞춘 세로 종횡비 (304:407 ≈ 3:4) */
+    aspect-ratio: 304 / 407;
+    max-width: 440px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 3px solid rgba(45, 106, 79, 0.25);
 }
 
 #cameraVideo {
@@ -521,6 +526,66 @@ body {
     object-fit: cover;
     transform: scaleX(-1);
     transition: transform 0.2s;
+}
+
+/* 프레임 슬롯 캐릭터 & 코너 가이드 오버레이 */
+.slot-guide-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 15;
+    transition: all 0.3s;
+}
+
+.slot-guide-corners {
+    position: absolute;
+    inset: 12px;
+    border: 2px dashed rgba(255, 255, 255, 0.45);
+    border-radius: 12px;
+}
+
+.slot-character-hint {
+    position: absolute;
+    opacity: 0.6;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.slot-character-hint.visible {
+    display: block;
+}
+
+/* 2컷: 우하단 책냥이 자리 힌트 */
+.slot-character-hint.cat-hint {
+    right: 14px;
+    bottom: 14px;
+    width: 110px;
+    height: auto;
+}
+
+/* 3컷: 좌하단 사과 자리 힌트 */
+.slot-character-hint.apple-hint {
+    left: 10px;
+    bottom: 10px;
+    width: 130px;
+    height: auto;
+}
+
+.hint-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 4px;
 }
 
 /* 플래시 이펙트 오버레이 */

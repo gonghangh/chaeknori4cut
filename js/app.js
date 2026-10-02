@@ -55,6 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
         countdownOverlay: document.getElementById('countdownOverlay'),
         countdownText: document.getElementById('countdownText'),
         currentCutBadge: document.getElementById('currentCutBadge'),
+        hintCat: document.getElementById('hintCat'),
+        hintApple: document.getElementById('hintApple'),
         btnToggleMirror: document.getElementById('btnToggleMirror'),
         btnSwitchCam: document.getElementById('btnSwitchCam'),
         btnShutterTrigger: document.getElementById('btnShutterTrigger'),
@@ -483,7 +485,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        elements.currentCutBadge.textContent = `📸 ${state.currentSlotIndex + 1}번째 컷 준비 (총 4컷)`;
+        elements.currentCutBadge.textContent = `📸 ${state.currentSlotIndex + 1}번째 컷 (3:4 프레임 맞춤)`;
+
+        // 프레임 오버레이 캐릭터 힌트 제어
+        if (elements.hintCat && elements.hintApple) {
+            elements.hintCat.classList.toggle('visible', state.currentSlotIndex === 1);
+            elements.hintApple.classList.toggle('visible', state.currentSlotIndex === 2);
+        }
     }
 
     // ----------------------------------------------------

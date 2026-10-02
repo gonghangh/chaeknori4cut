@@ -110,7 +110,7 @@ class ChaeknoriCamera {
         this.video.style.transform = this.isMirrored ? 'scaleX(-1)' : 'scaleX(1)';
     }
 
-    // 현재 카메라 비디오 프레임을 캔버스로 고해상도 캡처
+    // 현재 카메라 비디오 프레임을 304:407 프레임 규격으로 정확히 센터 크롭하여 고해상도 캡처
     capturePhoto() {
         if (!this.video || !this.stream) {
             throw new Error('카메라 스트림이 준비되지 않았습니다.');
@@ -119,17 +119,41 @@ class ChaeknoriCamera {
         const vW = this.video.videoWidth || 1280;
         const vH = this.video.videoHeight || 720;
 
+        // 책놀이네컷 슬롯 종횡비 (304 / 407 ≈ 0.7469)
+        const targetAspect = 304 / 407;
+        const videoAspect = vW / vH;
+
+        let srcX = 0, srcY = 0, srcW = vW, srcH = vH;
+
+        if (videoAspect > targetAspect) {
+            // 비디오가 더 가로로 넓은 경우 (일반 웹캠 16:9 또는 4:3) -> 좌우를 자르고 세로 전체 사용
+            srcH = vH;
+            srcW = vH * targetAspect;
+            srcX = (vW - srcW) / 2;
+            srcY = 0;
+        } else {
+            // 비디오가 더 세로로 긴 경우 -> 상하를 자르고 가로 전체 사용
+            srcW = vW;
+            srcH = vW / targetAspect;
+            srcX = 0;
+            srcY = (vH - srcH) / 2;
+        }
+
+        const outW = Math.round(srcW);
+        const outH = Math.round(srcH);
+
         const canvas = document.createElement('canvas');
-        canvas.width = vW;
-        canvas.height = vH;
+        canvas.width = outW;
+        canvas.height = outH;
         const ctx = canvas.getContext('2d');
 
         if (this.isMirrored) {
-            ctx.translate(vW, 0);
+            ctx.translate(outW, 0);
             ctx.scale(-1, 1);
         }
 
-        ctx.drawImage(this.video, 0, 0, vW, vH);
+        // 뷰파인더(object-fit: cover)와 100% 동일하게 잘라내어 캔버스에 그리기
+        ctx.drawImage(this.video, srcX, srcY, srcW, srcH, 0, 0, outW, outH);
         return canvas.toDataURL('image/jpeg', 0.95);
     }
 
